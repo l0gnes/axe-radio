@@ -42,8 +42,6 @@ class AxeRadioAPIWrapper(object):
         settings_path = self.locate_settings()
         self.load_settings(settings_path)
 
-        print(self.SETTINGS_CACHE)
-
     async def fetch_now_playing(self) -> Track:
 
         # fetch the json response from the api endpoint
@@ -74,13 +72,14 @@ class AxeRadioAPIWrapper(object):
 
         return [
             UpcomingTrack(
-                title           = r['track'],
-                artist          = r['artist'],
-                album           = r['album'],
-                duration        = int(r['duration']),
-                guid            = r['guid'],
-                cover_art_url   = "http://radiojar-lib.appspot.com/get_media_image?size=orig&guid=%s" % (r['guid'],),
-                start_time      = utils.i_hate_radiojar(r['tm']),
-                end_time        = utils.i_hate_radiojar(r['tm_end'])
+                title           = i['track'],
+                artist          = i['artist'],
+                album           = i['album'],
+                duration        = int(i['duration']),
+                guid            = i['guid'],
+                cover_art_url   = "http://radiojar-lib.appspot.com/get_media_image?size=orig&guid=%s" % (i['guid'],),
+                start_time      = utils.i_hate_radiojar(i['tm']),
+                end_time        = utils.i_hate_radiojar(i['tm_end'])
             )
+            for i in r
         ]
